@@ -1,0 +1,32 @@
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local TeleportService = game:GetService("TeleportService")
+
+local player = Players.LocalPlayer
+local chatRemote = ReplicatedStorage:WaitForChild("chat")
+
+local message = "yamiisantiago123@gmail.comyamiisantiago123@gmail.comyamiisantiago123@gmail.comyamiisantiago123@gmail.comyamiisantiago123@gmail.comyamiisantiago123@gmail.comyamiisantiago123@gmail.comyamiisantiago123@gmail.comyamiisantiago123@gmail.com"
+
+-- 채팅 15번 (쿨타임 1초)
+for i = 1, 9 do
+    chatRemote:FireServer(message)
+    task.wait(0.05)
+end
+
+task.wait(0.05)
+
+-- 재접속 실패 감지용
+local teleporting = false
+
+TeleportService.TeleportInitFailed:Connect(function(player, result, errorMessage)
+    teleporting = false
+end)
+
+-- 재접속 성공할 때까지 시도
+while true do
+    if not teleporting then
+        teleporting = true
+        TeleportService:Teleport(game.PlaceId, player)
+    end
+    task.wait(0.05)
+end
